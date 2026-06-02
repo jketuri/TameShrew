@@ -1,0 +1,10 @@
+set HOME=D:\n
+set OSG=%HOME%\OSG_OP_OT-1.2
+set LIBEXIF=%HOME%\libexif
+set PORTAUDIO=%HOME%\portaudio
+set SDK=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2
+set VC=C:\Program Files\Microsoft Visual Studio 8
+set INCLUDE=%VC%\VC\include;%SDK%\Include;%OSG%\OpenSceneGraph\include;%OSG%\OpenThreads\include;%OSG%\Producer\include;%OSG%\3rdParty\include;%PORTAUDIO%\include;%LIBEXIF%
+set LIB=%VC%\VC\lib;%SDK%\lib;%OSG%\OpenSceneGraph\lib\win32;%OSG%\OpenThreads\lib\win32;%OSG%\Producer\lib\win32;%OSG%\3rdParty\lib
+set PATH=%PATH%;%VC%\VC\bin;%VC%\Common7\IDE;%OSG%\OpenSceneGraph\bin\win32;%OSG%\OpenThreads\bin\win32;%OSG%\Producer\bin\win32;%HOME%\bin;%HOME%\unxutils\usr\local\wbin;%PORTAUDIO%\build\msvc\Release_x86
+set OSG_FILE_PATH=%OSG%\OpenSceneGraph-Data

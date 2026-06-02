@@ -1,0 +1,91 @@
+#fontName=fonts/truetype/freefont/FreeSans.ttf
+fontName=fonts/TTF/luximb.ttf
+#fontName=fonts/arialbd.ttf
+dataDirectory=~/LiveMapData
+databaseDirectory=~/LiveMapData/database
+# Hakemisto, jossa .tif- sekä .tab-päätteiset MapInfo-tyyppiset karttatiedostot sijaitsevat
+#mapDirectory=C:\map
+#mapDirectory=C:\n\map
+#mapDirectory=/usr/local/LiveMapData/map
+mapDirectory=~/LiveMapData/map
+photoDirectory=~/LiveMapData/photo
+photoShotDirectory=~/LiveMapData/photoShots
+GPTDirectory=~/LiveMapData/GPT
+GPTNotesDirectory=~/LiveMapData/GPTNotes
+NMEADirectory=~/LiveMapData/NMEA
+# Tiedosto, jossa sijaitsee lentoestetietokannan "comma separated values"-muotoinen lista
+obstacleFileName=Lentoestetietokanta.csv
+mpowerObstacleFileName=mpower.csv
+# Sarjaportin tunnus (COM1 tai COM2)
+#serialPortName=COM1
+serialPortName=/dev/ttyS0
+# Varokorkeus. Hälytys annetaan jos korkeuserotus esteen huipusta alukseen on tätä pienempi
+safetyHeightMeters=100.0
+# Jos etäisyys esteeseen on pienempi kuin matka, jonka alus kulkee näin monessa minuutissa,
+# annetaan hälytys
+hazardZoneMinutes=1.0
+# Kartta piilotetaan hälytyksen aikana (ks. hideMapsOnObstacles) ja laitetaan taas näkyviin jos
+# etäisyys seuraavaan hälytykseen on suurempi kuin matka, jonka alus kulkee nykyisellä nopeudella
+# näin monessa sekunnissa
+safetyMarginSeconds=10
+# Muistissa pidettävän kartan sivun enimmäispituus (kolmella jaettava)
+#mapSizePixels=2048
+mapSizePixels=3072
+#mapSizePixels=6144
+# Lasketaanko aluksen suunta sen peräkkäisistä koordinaateista vai otetaanko se GPS:stä (false).
+countedAngle=true
+#countedAngle=false
+# Onko pohjoinen aina ylhäällä kartassa (kartan tekstit ovat aina vaakasuorassa)
+fixedNorth=false
+#fixedNorth=true
+# Onko aluksen ympärillä oleva varokehä kokoympyrä vai puoliympyrä
+fullZoneCircle=false
+#disableAudio=false
+disableAudio=true
+# Otetaanko kartat pois käytöstä
+#disableMaps=true
+disableMaps=false
+# Otetaanko esteet pois käytöstä
+disableObstacles=false
+# Antaako GPS maanopeuden kilometreissa tunnissa (vai maileissa)
+groundSpeedInKmh=true
+# Piilotetaanko kartat kun hälytys alkaa.
+hideMapsOnObstacles=true
+# Otetaanko kaikki esteet kerralla näkymään (tällöin kuvan päivitysnopeus hidastuu)
+allObstaclesInView=true
+#allObstaclesInView=false
+#longitude=24.926798600
+#latitude=60.128341900
+#longitude=27.460233
+#latitude=68.345916
+#longitude=27.422
+#latitude=68.6105
+# Inkoo
+#longitude=23.94762
+#latitude=60.05024
+# Hongisto
+#longitude=25.38333
+#latitude=60.78333
+# Vantaa
+#longitude=24.86603
+#latitude=60.29361
+# Saariselkä
+#longitude=27.56978
+#latitude=68.24273
+longitude=27.4153
+latitude=69.0929
+#altitude=2000.0
+sceneryMode=false
+#sceneryMode=true
+testing=true
+#testing=false
+#useMapScales=true
+useMapScales=false
+#elevationMap=true
+elevationMap=false
+# suurin sallitty väli sekunneissa ratapisteissä
+trackToleranceSecs=100
+showTracks=true
+trackTimeRate=50.0
+verticalScale=2.0
+disableGPS=true

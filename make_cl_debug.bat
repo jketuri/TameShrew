@@ -1,0 +1,2 @@
+cl /DOSG /nologo /MD /W3 /GR /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /c LiveMap.cpp NMEA.cpp SerialStream.cpp common.cpp Datum.cpp MapIndex.cpp PickGLVisitor.cpp
+link LiveMap.obj NMEA.obj SerialStream.obj common.obj Datum.obj MapIndex.obj PickGLVisitor.obj osg.lib osgDB.lib osgGA.lib osgGLUT.lib osgParticle.lib osgUtil.lib freetype.lib glut32.lib zlibstat.lib libjpeg.lib libpng.lib libtiff.lib libungif.lib pthreadVC.lib stlport_vc6.lib /nologo /pdb:none /machine:I386

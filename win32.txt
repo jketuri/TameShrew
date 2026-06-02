@@ -1,0 +1,62 @@
+artoolkit
+---------
+
+Dependency DirectShow Video Library:
+Configuration Properties->Linker->Input->Ignore specific default libraries : atlthunk.lib
+
+Configuration Properties->C/C++->Additional include directories:
+C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include\atl
+C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include
+C:\Program Files\Microsoft DirectX 9.0 SDK (February 2005)\Include
+
+Configuration Properties->Linker->Input->Ignore specific library : atlthunk.lib
+
+src\videowin32directshow\_ext\dsvl-0.0.8h\src\DSVL_GraphManager.h
+//#include <atlcomcli.h>	// CComPtr
+
+Configuration Properties->Linker->General->Additional library directories:
+D:\lm\3rdParty\x86\lib
+
+gdal
+----
+
+Configuration Properties->VC++ Directories->Include Directories:
+C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include\atl
+C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include
+link /nodefaultlib:atlthunk.lib
+makefile.vc:
+##############################################################################
+# We need to add vb6 support if STDCALL is defined. 
+!IF 0 && DEFINED(STDCALL) && $(MSVC_VER) < 1500
+VB6_OBJ = vb6\vb6_support.obj
+VB6_TARGET = vb6_dir
+!ENDIF
+
+!IF 0 && $(MSVC_VER) < 1500
+VB6_SAFEARRAYSYM =	/INCLUDE:_vbSafeArrayToPtr@16
+!ENDIF
+
+delete:
+	cd vb6
+	$(MAKE) /f makefile.vc clean
+	cd ..
+vb6_dir:
+	cd vb6
+	$(MAKE) /f makefile.vc
+	cd ..
+
+python 2.6
+
+osgart
+------
+
+VS 2010
+ImageStreamCallback -> osgART_2.0_RC3\include\osgART
+
+
+
+Peder Gram
+Eyvind Alnaes
+Helmer Alexandersson
+Wilhelm Furtwängler
+

@@ -1,0 +1,9 @@
+set DRIVE=D:
+set HOME=%DRIVE%\lm
+set GDAL=%HOME%\gdal
+set GDAL_DATA=%GDAL%\bin\gdal-data
+set GDAL_DRIVER_PATH=%GDAL%\bin\gdal\plugins
+set PYTHONPATH=%GDAL%\bin\gdal\python;%GDAL%\bin\gdal\python\osgeo;%GDAL%\bin\ms\python
+set PROJ_LIB=%GDAL%\bin\proj\SHARE
+set PROJ=%HOME%\proj-4.8.0\src
+set PATH=%GDAL%\bin;%GDAL%\bin\gdal\python\osgeo;%GDAL%\bin\proj\apps;%GDAL%\bin\gdal\apps;%GDAL%\bin\ms\apps;%GDAL%\bin\gdal\csharp;%GDAL%\bin\ms\csharp;%GDAL%\bin\curl;C:\Python26;%PATH%

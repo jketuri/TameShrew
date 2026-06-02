@@ -1,0 +1,1 @@
+zip \LiveMap%1 LiveMap.exe LiveMap.properties

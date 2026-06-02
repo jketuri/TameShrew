@@ -1,0 +1,5 @@
+#!/usr/bin/sh
+c++ -g -DWIN32 -W -Wall LiveMap.cpp NMEA.cpp SerialStream.cpp common.cpp Datum.cpp MapIndex.cpp PatternDrawable.cpp $PORTAUDIO/pa_common/pa_lib.c $PORTAUDIO/pa_win_wmme/pa_win_wmme.c
+c++ -g -W -Wall
+#link /DEBUG /INCREMENTAL:NO /NOLOGO /OUT:LiveMap.exe /SUBSYSTEM:CONSOLE LiveMap.obj NMEA.obj SerialStream.obj common.obj Datum.obj MapIndex.obj PatternDrawable.obj pa_lib.obj pa_win_wmme.obj odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib freetype.lib libjpeg.lib libpng.lib libtiff.lib libungif.lib osgd.lib osgDBd.lib osgdb_freetype.lib osgGAd.lib osgParticled.lib osgProducerd.lib osgSimd.lib osgTextd.lib osgUtild.lib producerd.lib zlibstat.lib OpenGL32.lib libcd.lib winmm.lib
+#ls -l LiveMap.exe

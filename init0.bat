@@ -1,0 +1,3 @@
+set INCLUDE=C:\n\ht\pthreads\Pre-built\include;C:\n\STLport-4.5.3\stlport;C:\Program Files\Microsoft Visual Studio\VC98\include;C:\Program Files\Microsoft Visual Studio\VC98\atl\include;C:\Program Files\OpenSceneGraph\include
+set LIB=C:\n\ht\pthreads\Pre-built\lib;C:\n\STLport-4.5.3\lib;C:\Program Files\Microsoft Visual Studio\VC98\Lib;C:\Program Files\OpenSceneGraph\lib
+set PATH=C:\n\ht\pthreads\Pre-built\lib;C:\n\STLport-4.5.3\lib;C:\Program Files\Microsoft Visual Studio\VC98\Bin;C:\Program Files\Microsoft Visual Studio\VB98;C:\unxutils\usr\local\wbin;%PATH%

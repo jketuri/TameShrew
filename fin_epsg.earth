@@ -1,0 +1,31 @@
+<!--
+osgEarth Sample
+
+This example demonstrates how to set a particular datum for a geocentric map.
+By default, a geocentric map will use a WGS84 datum. Use the "profile" tag
+to specify a different one is so desired. The contents of the "srs" tag can be
+any SRS initialization string (like PROJ4 or WKT).
+
+This example renders a NAD27 globe instead of a WGS84 globe.
+
+See this site for SRS codes and PROJ4 initialization strings:
+http://spatialreference.org
+-->
+
+<map name="datum override example" type="geocentric" version="2">
+<!--
+    <options>
+        <lighting>false</lighting>
+        <profile srs="+proj=longlat +ellps=gps80 +datum=etrs +no_defs"/>
+    </options> 
+        <url>map</url>
+-->
+    <image driver="gdal" name="world-tiff">
+        <url>C:\Users\acer\map1</url>
+        <profile srs="EPSG:3067" xmin="20000.000" xmax="740000.000" ymin="6594000.000" ymax="7794000.000"/>
+    </image>
+    <elevation driver="gdal" name="elevation">
+        <url>C:\Users\acer\map2</url>
+        <profile srs="EPSG:3067" xmin="20000.000" xmax="692000.000" ymin="6570000.000" ymax="7818000.000"/>
+    </elevation>
+</map>

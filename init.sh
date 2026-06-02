@@ -1,0 +1,16 @@
+#!/bin/bash
+#export OSGHOME="$HOME/OSG_OP_OT-1.2"
+export OSGHOME="$HOME/OpenSceneGraph-2.8.2"
+export OPENTHREADS_INC_DIR="$OSGHOME/OpenThreads/include"
+export OPENTHREADS_LIB_DIR="$OSGHOME/OpenThreads/lib/Linux32"
+export PRODUCER_INC_DIR="$OSGHOME/Producer/include"
+export PRODUCER_LIB_DIR="$OSGHOME/Producer/lib/Linux32"
+export OPENSCENEGRAPH="$OSGHOME/OpenSceneGraph"
+export PORTAUDIO="$HOME/portaudio"
+export CPATH="/usr/X11R6/include:/usr/local/include:$OSGHOME/include:$OPENTHREADS_INC_DIR:$PRODUCER_INC_DIR:$OPENSCENEGRAPH/include:$PORTAUDIO/include"
+export LIBRARY_PATH="/usr/X11R6/lib:/usr/local/lib:$OSGHOME/lib:$OPENTHREADS_LIB_DIR:$OSGHOME/Producer/lib/Linux32:$OPENSCENEGRAPH/lib/Linux32:$OPENSCENEGRAPH/lib/Linux32/osgPlugins"
+export PATH="$OPENSCENEGRAPH/bin/Linux32:$PATH"
+export OSG_LD_LIBRARY_PATH="$LIBRARY_PATH"
+export LD_LIBRARY_PATH="$OSG_LD_LIBRARY_PATH"
+export DYLD_BIND_AT_LAUNCH
+export OSG_FILE_PATH="/usr/X11R6/lib/X11:/usr/share:$OSGHOME/OpenSceneGraph-Data"

@@ -1,0 +1,10 @@
+export OPENSCENEGRAPH="$HOME/jotuomin@hotmail.com/osg/OSG_OP_OT-0.9.6-2/OpenSceneGraph-0.9.6-2"
+export PORTAUDIO="$HOME/jotuomin@hotmail.com/portaudio/portaudio_v18_1"
+export CPATH="/usr/X11R6/include:/usr/local/include:$OPENSCENEGRAPH/include:$PORTAUDIO/pa_common"
+export LIBRARY_PATH="/usr/X11R6/lib:/usr/local/lib:/usr/local/lib/osgPlugins:$OPENSCENEGRAPH/lib/Linux32"
+export PATH="$OPENSCENEGRAPH/bin/Linux32:$PATH"
+export OSGHOME="$OPENSCENEGRAPH"
+export OSG_LD_LIBRARY_PATH="$LIBRARY_PATH"
+export LD_LIBRARY_PATH="$OSG_LD_LIBRARY_PATH"
+export DYLD_BIND_AT_LAUNCH
+export OSG_FILE_PATH="/usr/X11R6/lib/X11"

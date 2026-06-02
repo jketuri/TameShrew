@@ -1,0 +1,8 @@
+cl /c /nologo /W3 /WX- /O2 /Ob2 /Oy- /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_DEPRECATE" /D "_MBCS" /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fp"osgearth_viewer.pch" /Fd"osgearth_viewer.pdb" /Gd /TP /analyze- /errorReport:queue osgearth_viewer.cpp NMEA.cpp SerialStream.cpp SocketStream.cpp USBStream.cpp common.cpp Datum.cpp Garmin.cpp
+@if not "%ERRORLEVEL%" == "0" goto end
+link /OUT:"osgearth_viewer.exe" /INCREMENTAL:NO /NOLOGO "kernel32.lib" "user32.lib" "gdi32.lib" "winspool.lib" "shell32.lib" "ole32.lib" "oleaut32.lib" "uuid.lib" "comdlg32.lib" "advapi32.lib" "SetupAPI.lib" "osgEarth.lib" "osgEarthFeatures.lib" "osgEarthUtil.lib" "osgEarthSymbology.lib" "osgEarthAnnotation.lib" "osg.lib" "osgDB.lib" "osgUtil.lib" "osgViewer.lib" "OpenThreads.lib" "ws2_32.lib" "winmm.lib" "wldap32.lib" "osgShadow.lib" "libcurl.lib" "zlib.lib" "osgWidget.lib" "gdal_i.lib" "osgSim.lib" "osgTerrain.lib" "osgFX.lib" "osgManipulator.lib" "osgText.lib" "osgGA.lib" "osgART.lib" "glu32.lib" "opengl32.lib" "portaudio_x86.lib" "libusb-1.0.lib" osgearth_viewer.obj NMEA.obj SerialStream.obj SocketStream.obj USBStream.obj common.obj Datum.obj Garmin.obj /MANIFEST /ManifestFile:"osgearth_viewer.exe.manifest" /ALLOWISOLATION /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"osgearth_viewer.pdb" /SUBSYSTEM:CONSOLE /STACK:"10000000" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"osgearth_viewer.lib" /MACHINE:X86 /ERRORREPORT:QUEUE
+@if not "%ERRORLEVEL%" == "0" goto end
+mt -manifest osgearth_viewer.exe.manifest -outputresource:osgearth_viewer.exe
+@if not "%ERRORLEVEL%" == "0" goto end
+dir osgearth_viewer.exe
+:end

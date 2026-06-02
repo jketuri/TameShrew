@@ -1,0 +1,10 @@
+set DRIVE=D:
+set HOME=%DRIVE%\lm
+set GDAL=%HOME%\gdal-1.10.1
+set GDAL_DATA=%GDAL%\data
+@rem set GDAL_DRIVER_PATH=%GDAL%\bin\gdal\plugins
+@rem set PYTHONPATH=%GDAL%\swig\python;%GDAL%\swig\python\osgeo;%GDAL%\swig\python\scripts
+@rem set PROJ_LIB=%GDAL%\bin\proj\SHARE
+@rem set PROJ=%HOME%\proj-4.8.0\src
+set SWIG=%HOME%\swigwin-2.0.11
+set PATH=%GDAL%;%GDAL%\apps;%SWIG%;C:\Python26;%PATH%

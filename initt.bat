@@ -1,0 +1,2 @@
+set OPENSCENEGRAPH=C:\n\OSG_OP_OT-0.9.6\OpenSceneGraph-0.9.6
+set PATH=C:\bin;%OPENSCENEGRAPH%\bin

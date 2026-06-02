@@ -1,0 +1,2 @@
+cl /O2 /Ob1 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "OPEN_PRODUCER" /GF /FD /EHsc /Gy /GR /YX"stdafx.h" /W3 /nologo /c LiveMap.cpp NMEA.cpp SerialStream.cpp common.cpp Datum.cpp MapIndex.cpp PickGLVisitor.cpp
+link /machine:i386 /incremental:no /nologo /subsystem:console osg.lib osgDB.lib osgGA.lib osgGLUT.lib osgParticle.lib osgUtil.lib freetype.lib glut32.lib zlibstat.lib libjpeg.lib libpng.lib libtiff.lib libungif.lib pthreadVC.lib /out:LiveMap.exe LiveMap.obj NMEA.obj SerialStream.obj common.obj Datum.obj MapIndex.obj PickGLVisitor.obj

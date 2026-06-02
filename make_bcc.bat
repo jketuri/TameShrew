@@ -1,0 +1,2 @@
+bcc32 -c -tWC -tWD -tWM -DOSG -DOSG_VERSION="0.9.4" -DOSG_VERSION_REVISION="0" -DWIN32 -RT -I"C:\Program Files\OpenSceneGraph\include" LiveMap.cpp NMEA.cpp SerialStream.cpp common.cpp Datum.cpp MapIndex.cpp
+ilink32 -L"C:\Program Files\OpenSceneGraph\blib" LiveMap.obj NMEA.obj SerialStream.obj common.obj Datum.obj MapIndex.obj c0w32.obj cw32.lib cw32i.lib import32.lib osg.lib osgDB.lib osgGA.lib osgGLUT.lib osgParticle.lib osgText.lib osgUtil.lib gdi32.lib opengl32.lib glu32.lib kernel32.lib user32.lib

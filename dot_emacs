@@ -1,0 +1,29 @@
+;; .emacs
+
+;;; uncomment this line to disable loading of "default.el" at startup
+;; (setq inhibit-default-init t)
+
+;; turn on font-lock mode
+(when (fboundp 'global-font-lock-mode)
+  (global-font-lock-mode t))
+
+;; enable visual feedback on selections
+;(setq transient-mark-mode t)
+
+;; default to better frame titles
+(setq frame-title-format
+      (concat  "%b - emacs@" system-name))
+
+(setq-default tab-width 4)
+
+(setq-default c-basic-offset 4)
+
+(setq-default indent-tabs-mode nil)
+
+(setq-default make-backup-files nil)
+
+(custom-set-variables '(transient-mark-mode t))
+
+(setq inhibit-eol-conversion t)
+
+(remove-hook 'find-file-not-found-hooks 'find-file-not-found-set-buffer-file-coding-system)

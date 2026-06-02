@@ -1,0 +1,6 @@
+
+usb-mode:
+go to shortcuts system, interface: garmin spanner
+
+persistent usb-mode:
+settings->demo mode->spanner

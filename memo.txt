@@ -1,0 +1,28 @@
+Näpäyttämällä reittimerkintää hiiren oikealla napilla,
+ohjelma näyttää kyseisen reitin ajona.
+
+Tietääkseni se on näin: korkeus on metreinä siten että kukin väri-indeksi
+vastaa yhtä metriä. Kuvat ovat 16-bittisiä harmaasävykuvia, joten indeksi 0 (=
+musta) vastaa korkeutta 0 metriä. 16 bittisen numeron maksimiarvo 65535 (=
+valkoinen), vastaa taas korkeutta 65535 metriä. Muut korkeudet sitten siitä
+väliltä metrin pykälin. Luulisin että vertailutaso on Finland Hayford. Tämä
+kannattanee kuitenkin tarkistaa Genimapista, vai mistä ne nyt olivatkaan
+lähtöisin. "
+
+a - ensimmäinen valokuva
+c - näytä reitit
+d - seuraava reitti
+e - edellinen reitti
+n - seuraava valokuva
+p - edellinen valokuva
+x - kaikki kuvat
+
+1. luku, musta : aika törmäykseen sekuntia
+2. luku, vihreä : korkeus metreissä
+3. luku, oranssi : varokorkeus metreissä
+4. luku, punainen : varokorkeus - korkeus metreissä
+
+Mac
+oikea hiiri näppäin=kaksi sormea pinnalla ja näpäytys napilla
+skroll=alt + hiirinappi + pinta
+zoom=cmd + hiirinappi + pinta
