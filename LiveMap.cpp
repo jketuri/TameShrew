@@ -3599,15 +3599,7 @@ int main(int argc, char **argv)
                 liveMap->readJPEG(filePath, layout, NULL);
                 pos++;
             }
-        /*
-        while (!viewer->done()) {
-            viewer->sync();
-            viewer->update();
-            viewer->frame();
-        }
-        viewer->sync();
-        */
-        viewer->run();
+        viewer->realize();
         if (!liveMap->disableAudio) {
             PaError paError = Pa_Terminate();
             if (paError != paNoError) throw Support::makeMessage("PortAudio", Pa_GetErrorText(paError));
