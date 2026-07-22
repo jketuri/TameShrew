@@ -20,6 +20,7 @@
 #define FILE_SEPARATOR "\\"
 #define IMAGE_FILE_TYPE "bmp"
 #else
+#include <sys/stat.h>
 extern "C"
 {
 #include <dirent.h>

@@ -52,7 +52,9 @@ SocketBuffer::SocketBuffer(string host, int port) : socketDescriptor(0), buffer(
     memcpy(&socketAddress->sin_addr, &((struct sockaddr_in *)res->ai_addr)->sin_addr, 4);
     socketAddress->sin_family = PF_INET;
     socketAddress->sin_port = htons((short)port);
+#ifdef USE_WIN32
     socketAddress->sin_len = size;
+#endif
     freeaddrinfo(res);
     int connectValue = connect(socketDescriptor, (const struct sockaddr *)socketAddress, size);
     if (connectValue == -1) throw Support::makeMessage("SocketStream open", strerror(errno));
