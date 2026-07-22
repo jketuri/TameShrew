@@ -69,11 +69,13 @@ extern "C"
 #include <osgUtil/SceneView>
 #include <osgUtil/SmoothingVisitor>
 #include "Datum.hpp"
+#include "Garmin.hpp"
 #include "MapIndex.hpp"
-#include "PhotoIndex.hpp"
 #include "NMEA.hpp"
+#include "PhotoIndex.hpp"
 #include "SerialStream.hpp"
 #include "SocketStream.hpp"
+#include "USBStream.hpp"
 #include "common.hpp"
 
 #define BOTH_BUTTONS (osgGA::GUIEventAdapter::LEFT_MOUSE_BUTTON | osgGA::GUIEventAdapter::RIGHT_MOUSE_BUTTON)
@@ -579,6 +581,7 @@ public:
     bool fixedNorth;
     bool followCamera;
     bool fullZoneCircle;
+    bool garmin;
     bool generateDatabase;
     bool groundSpeedInKmh;
     bool hideMapsOnObstacles;
@@ -633,6 +636,7 @@ public:
     string dataDirectory;
     string databaseDirectory;
     string fontName;
+    string gpsUsbDeviceGuid;
     string mapDirectory;
     string photoDirectory;
     string photoShotDirectory;
@@ -654,6 +658,8 @@ public:
     OpenThreads::Condition trackShowCondition;
     timeb angleTime;
     timeb gpsTime;
+    uint16_t idVendor;
+    uint16_t idProduct;
 
     LiveMap(osgViewer::Viewer *viewer);
     ~LiveMap() noexcept(false);

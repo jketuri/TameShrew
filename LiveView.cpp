@@ -1204,10 +1204,10 @@ void LiveView::readProperties()
             fullZoneCircle = Support::isTrueOrFalse(value);
         } else if (name == "garmin") {
             garmin = Support::isTrueOrFalse(value);
-        } else if (name == "groundSpeedInKmh") {
-            groundSpeedInKmh = Support::isTrueOrFalse(value);
         } else if (name == "gpsUsbDeviceGuid") {
             gpsUsbDeviceGuid = value;
+        } else if (name == "groundSpeedInKmh") {
+            groundSpeedInKmh = Support::isTrueOrFalse(value);
         } else if (name == "idProduct") {
             idProduct = atoi(value.c_str());
         } else if (name == "idVendor") {

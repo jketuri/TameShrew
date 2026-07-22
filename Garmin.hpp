@@ -17,7 +17,7 @@ typedef unsigned char uint8;
 
 typedef unsigned short uint16;
 
-typedef unsigned long uint32;
+typedef unsigned int uint32;
 
 typedef signed short sint16;
 
@@ -844,7 +844,7 @@ enum D155_DisplaySymbol {
 
 enum D210_Class {
     line = 0,
-    link = 1,
+    d210_link = 1,
     net = 2,
     direct = 3,
     snap = 0xFF

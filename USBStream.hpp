@@ -27,6 +27,8 @@ typedef WORD uint16_t;
 #endif
 #include "common.hpp"
 
+using namespace common;
+
 class USBBuffer : public streambuf
 {
 

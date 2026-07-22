@@ -941,6 +941,38 @@ void DatabaseGenerateThread::run()
     }
 }
 
+class LiveMapGarmin : public Garmin
+{
+    LiveMap &liveMap;
+
+protected:
+
+    void pvtData(D800_Pvt_Data_Type &pvtData)
+    {
+#ifdef DEBUG
+        cout << "pvtData alt=" << pvtData.alt << ", epe=" << pvtData.epe << ", eph=" << pvtData.eph << ", epv=" << pvtData.epv << ", fix=" << pvtData.fix << ", tow=" << pvtData.tow << ", lon=" << pvtData.posn.lon << ", lat=" << pvtData.posn.lat << ", east=" << pvtData.east << ", north=" << pvtData.north << ", up=" << pvtData.up << ", msl_hght=" << pvtData.msl_hght << ", leap_scnds=" << pvtData.leap_scnds << ", wn_days=" << pvtData.wn_days << endl;
+#endif
+        if (pvtData.fix == DIM_2D || pvtData.fix == DIM_3D) {
+            liveMap.vesselCoordinates.x = 180.0 * (pvtData.posn.lon / Support::PI);
+            liveMap.vesselCoordinates.y = 180.0 * (pvtData.posn.lat / Support::PI);
+            if (pvtData.fix == DIM_3D) {
+                liveMap.vesselCoordinates.z = pvtData.alt + pvtData.msl_hght;
+            }
+            double velocityMetersInSecond = sqrt(pvtData.east * pvtData.east + pvtData.north * pvtData.north);
+            liveMap.vesselVelocity = velocityMetersInSecond * 60.0 * 60.0 / 1000.0;
+            // liveMap.garminSeconds = (double)pvtData.wn_days * 24.0 * 60.0 * 60.0 + pvtData.tow - (double)pvtData.leap_scnds;
+            liveMap.relocateVessel();
+        }
+    }
+
+public:
+
+    LiveMapGarmin(LiveMap &liveMap) : liveMap(liveMap)
+    {
+    }
+
+};
+
 GpsListenerThread::GpsListenerThread(LiveMap &liveMap) : liveMap(liveMap)
 {
 }
@@ -952,8 +984,15 @@ GpsListenerThread::~GpsListenerThread()
 void GpsListenerThread::run()
 {
     try {
+        cout << "GpsListenerThread beginning" << endl;
         iostream nmeaStream(liveMap.nmeaBuffer);
-        liveMap.nmea.readInputStream(nmeaStream, NULL);
+        if (liveMap.garmin) {
+            LiveMapGarmin liveMapGarmin(liveMap);
+            liveMapGarmin.readInputOutputStream(nmeaStream, NULL);
+        } else {
+	  liveMap.nmea.readInputStream(nmeaStream, NULL);
+	}
+        cout << "GpsListenerThread ending" << endl;
     }
     catch (string *message) {
         cout << *message << endl;
@@ -1027,7 +1066,7 @@ void TrackShowThread::run()
     }
 }
 
-LiveMap::LiveMap(osgViewer::Viewer *viewer) : nmea(183), mapIndex(NULL), photoIndex(NULL), lastMapEntry(NULL), nmeaOutStream(NULL), nmeaBuffer(NULL), raster(NULL), elevationRaster(NULL), photoEntry(NULL), layout(LiveMap::FULL), trackData(NULL), trackGroup(NULL), trackSwitch(NULL), lastObstacleData(NULL), firstObstacleData(NULL), previousObstacleData(NULL), firstTrackData(NULL), previousTrackData(NULL), obstaclePivotPosition(NULL), allObstaclesInView(false), audioSignalStreamActive(false), cameraSet(false), countedAngle(false), disableAudio(false), disableGPS(false), disableMaps(false), disableObstacles(false), fixedNorth(false), followCamera(false), fullZoneCircle(false), generateDatabase(false), groundSpeedInKmh(false), hideMapsOnObstacles(false), inHazardZone(false), inSafetyZone(false), orthographicProjection(false), readingNMEA(false), recordNMEA(false), relocatingVessel(false), savingImage(false), savingPhotoShots(false), sceneryMode(false), showTracks(false), showingTracks(false), stopped(false), testing(false), useMapScales(false), elevationMap(false), photoInfoVisible(false), hasLastTrackVesselPosition(false), hasLastTrackVertexArray(false), angleSeconds(0.0), trackAngle(osg::PI / 2.0), lastTrackAngle(trackAngle), gridConvergence(0.0), hazardClearance(0.0), hazardLevel(0.0), vesselAngle(0.0), vesselVelocity(0.0), vesselZoneRadius(0.0), safetyZoneRadius(0.0), safetyHeight(100.0), safetyMarginHours(10.0 / 60.0 / 60.0), hazardZoneHours(1.0 / 60.0), verticalScale(1.0), trackTimeRate(1.0), trackToleranceSecs(10.0), mapSizePixels(0), mapTextureAddCount(4), mapTextureCount(36), mapTextureSize(1024), obstacleGroupDataNumber(0), scaleIndex(0), lastScaleIndex(0), vesselPositionNumber(0L), gpsListenerThread(NULL), mapReaderThread(NULL), trackShowThread(NULL)
+LiveMap::LiveMap(osgViewer::Viewer *viewer) : nmea(183), mapIndex(NULL), photoIndex(NULL), lastMapEntry(NULL), nmeaOutStream(NULL), nmeaBuffer(NULL), raster(NULL), elevationRaster(NULL), photoEntry(NULL), layout(LiveMap::FULL), trackData(NULL), trackGroup(NULL), trackSwitch(NULL), lastObstacleData(NULL), firstObstacleData(NULL), previousObstacleData(NULL), firstTrackData(NULL), previousTrackData(NULL), obstaclePivotPosition(NULL), allObstaclesInView(false), audioSignalStreamActive(false), cameraSet(false), countedAngle(false), disableAudio(false), disableGPS(false), disableMaps(false), disableObstacles(false), fixedNorth(false), followCamera(false), fullZoneCircle(false), garmin(false), generateDatabase(false), groundSpeedInKmh(false), hideMapsOnObstacles(false), inHazardZone(false), inSafetyZone(false), orthographicProjection(false), readingNMEA(false), recordNMEA(false), relocatingVessel(false), savingImage(false), savingPhotoShots(false), sceneryMode(false), showTracks(false), showingTracks(false), stopped(false), testing(false), useMapScales(false), elevationMap(false), photoInfoVisible(false), hasLastTrackVesselPosition(false), hasLastTrackVertexArray(false), angleSeconds(0.0), trackAngle(osg::PI / 2.0), lastTrackAngle(trackAngle), gridConvergence(0.0), hazardClearance(0.0), hazardLevel(0.0), vesselAngle(0.0), vesselVelocity(0.0), vesselZoneRadius(0.0), safetyZoneRadius(0.0), safetyHeight(100.0), safetyMarginHours(10.0 / 60.0 / 60.0), hazardZoneHours(1.0 / 60.0), verticalScale(1.0), trackTimeRate(1.0), trackToleranceSecs(10.0), mapSizePixels(0), mapTextureAddCount(4), mapTextureCount(36), mapTextureSize(1024), obstacleGroupDataNumber(0), scaleIndex(0), lastScaleIndex(0), vesselPositionNumber(0L), gpsListenerThread(NULL), mapReaderThread(NULL), trackShowThread(NULL)
 {
     this->viewer = viewer;
     readProperties();
@@ -1429,9 +1468,18 @@ void LiveMap::initialize()
     }
     if (!disableGPS) {
         if (!serialPortName.empty()) {
+            cout << "Reading GPS from serial port" << endl;
             SerialBuffer *serialBuffer = new SerialBuffer(serialPortName);
             serialBuffer->setSerialPortParameters(4800, 8, SerialBuffer::StopBits1, SerialBuffer::ParityNone, SerialBuffer::FlowControlNone);
             nmeaBuffer = serialBuffer;
+        } else if (idVendor || !gpsUsbDeviceGuid.empty()) {
+#ifdef USE_WIN_USB
+            cout << "Reading GPS from USB GUID=" << gpsUsbDeviceGuid << endl;
+            nmeaBuffer = new USBBuffer(gpsUsbDeviceGuid, true, false, false, true);
+#else
+            cout << "Reading GPS from USB idVendor=" << idVendor << ", idProduct=" << idProduct << endl;
+            nmeaBuffer = new USBBuffer(idVendor, idProduct, true, false, false);
+#endif
         } else {
             nmeaBuffer = new SocketBuffer(socketHost, socketPort);
         }
@@ -1544,12 +1592,20 @@ void LiveMap::readProperties()
             fontName = Support::toPhysicalPath(value);
         } else if (name == "fullZoneCircle") {
             fullZoneCircle = Support::isTrueOrFalse(value);
+        } else if (name == "garmin") {
+            garmin = Support::isTrueOrFalse(value);
+        } else if (name == "gpsUsbDeviceGuid") {
+            gpsUsbDeviceGuid = value;
         } else if (name == "groundSpeedInKmh") {
             groundSpeedInKmh = Support::isTrueOrFalse(value);
         } else if (name == "hazardZoneMinutes") {
             hazardZoneHours = atof(value.c_str()) / 60.0;
         } else if (name == "hideMapsOnObstacles") {
             hideMapsOnObstacles = Support::isTrueOrFalse(value);
+        } else if (name == "idProduct") {
+            idProduct = atoi(value.c_str());
+        } else if (name == "idVendor") {
+            idVendor = atoi(value.c_str());
         } else if (name == "latitude") {
             vesselCoordinates.y = atof(value.c_str());
         } else if (name == "longitude") {

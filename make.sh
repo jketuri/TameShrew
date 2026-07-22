@@ -14,10 +14,8 @@ else
 OPTIONS="-O2"
 fi
 
-gcc $OPTIONS -W -Wall -fPIC -c LiveMap.cpp NMEA.cpp SerialStream.cpp common.cpp Datum.cpp MapIndex.cpp PhotoIndex.cpp SocketStream.cpp
+gcc $OPTIONS -W -Wall -fPIC -c Datum.cpp Garmin.cpp LiveMap.cpp MapIndex.cpp NMEA.cpp PhotoIndex.cpp SerialStream.cpp SocketStream.cpp USBStream.cpp common.cpp
 check
-#libtool --mode=link gcc $OPTIONS LiveMap.o NMEA.o SerialStream.o common.o Datum.o MapIndex.o PatternDrawable.o PhotoIndex.o $PORTAUDIO/lib/libportaudio.la -lstdc++ -lexif -lfreetype -ljpeg -lpng -ltiff -lungif -losg -losgDB -losgGA -losgParticle -losgProducer -losgSim -losgText -losgUtil -lProducer -lz -lGLU -lGL -lXi -lXmu -lX11 -lOpenThreads -o LiveMap
-#libtool --mode=link gcc $OPTIONS LiveMap.o NMEA.o SerialStream.o common.o Datum.o MapIndex.o PhotoIndex.o -lstdc++ -lexif -lfreetype -lportaudio -ljpeg -lpng -ltiff -lungif -losg -losgDB -losgGA -losgParticle -losgSim -losgText -losgUtil -lz -lGLU -lGL -lXi -lXmu -lX11 -lOpenThreads -o LiveMap
-libtool --mode=link gcc $OPTIONS Datum.o LiveMap.o MapIndex.o NMEA.o PhotoIndex.o SerialStream.o SocketStream.o common.o -lGL -lstdc++ -lexif -ljpeg -lm -losg -losgDB -losgGA -losgParticle -losgSim -losgText -losgUtil -losgViewer -lportaudio -ltiff -lz -lOpenThreads -o LiveMap
+libtool --mode=link gcc $OPTIONS Datum.o Garmin.o LiveMap.o MapIndex.o NMEA.o PhotoIndex.o SerialStream.o SocketStream.o USBStream.o common.o -lGL -lexif -ljpeg -lm -losg -losgDB -losgGA -losgParticle -losgSim -losgText -losgUtil -losgViewer -lportaudio -lstdc++ -ltiff -lusb-1.0 -lz -lOpenThreads -o LiveMap
 check
 ls -l LiveMap
