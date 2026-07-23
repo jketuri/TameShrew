@@ -3556,7 +3556,6 @@ int main(int argc, char **argv)
         }
         viewer->addEventHandler(new osgViewer::HelpHandler(arguments.getApplicationUsage()));
         //viewer->requestContinuousUpdate(true);
-        viewer->realize();
         LiveMap *liveMap = new LiveMap(viewer.get());
         for (int pos = 1; pos < arguments.argc(); pos++)
             if (arguments.isOption(pos))
@@ -3600,6 +3599,7 @@ int main(int argc, char **argv)
                 pos++;
             }
         viewer->realize();
+        viewer->run();
         if (!liveMap->disableAudio) {
             PaError paError = Pa_Terminate();
             if (paError != paNoError) throw Support::makeMessage("PortAudio", Pa_GetErrorText(paError));
