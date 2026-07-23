@@ -171,8 +171,8 @@ void MapIndex::generate(string &dirPath, int scaleIndex)
             if (!getline(in, line)) {
                 break;
             }
-            bool isCoordinate1 = line.find("Label \"Pt 1\"") != (unsigned)-1;
-            if (isCoordinate1 || line.find("Label \"Pt 3\"") != (unsigned)-1) {
+            bool isCoordinate1 = line.find("Label \"Pt 1\"") != -1;
+            if (isCoordinate1 || line.find("Label \"Pt 3\"") != -1) {
                 int leftParen = (int)line.find('('), rightParen = (int)line.find(')', leftParen + 1);
                 if (leftParen == -1 || rightParen == -1) break;
                 StringTokenizer st(line.substr(leftParen + 1, rightParen - leftParen - 1), ",", false);
@@ -195,7 +195,7 @@ void MapIndex::generate(string &dirPath, int scaleIndex)
                     foundCoordinate3 = true;
                 }
             }
-            else if (line.find("CoordSys Earth Projection") != (unsigned)-1) {
+            else if (line.find("CoordSys Earth Projection") != -1) {
                 StringTokenizer st(line, ",", false);
                 string token = Support::trim(st.nextToken());
                 int space = (int)token.rfind(' ');
