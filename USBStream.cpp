@@ -192,6 +192,12 @@ USBBuffer::USBBuffer(uint16_t idVendor, uint16_t idProduct, bool findIn, bool fi
         throw Support::makeMessage("USBStream cannot find interrupt input", "");
     }
 	libusb_free_device_list(devices, 1);
+    if (libusb_kernel_driver_active(deviceHandle, 0)) {
+        returnValue = libusb_detach_kernel_driver(deviceHandle, 0);
+        if (returnValue < 0) {
+            throw Support::makeMessage("USBStream libusb_detach_kernel_driver", strerror(errno));
+        }
+    }
     returnValue = libusb_claim_interface(deviceHandle, 0);
     if (returnValue < 0) {
         throw Support::makeMessage("USBStream claim_interface", strerror(errno));
