@@ -1,0 +1,8 @@
+lsusb
+ls -l /dev/bus/usb/001/034
+sudo emacs /etc/udev/rules.d/50-usb.rules
+# SUBSYSTEM=="usb", MODE="0664", GROUP="a"
+sudo udevadm control --reload
+sudo udevadm trigger
+ls -l /dev/bus/usb/001/034
+
