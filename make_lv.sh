@@ -16,7 +16,7 @@ else
 OPTIONS="-O2"
 fi
 
-gcc $OPTIONS -W -Wall -fPIC -c Datum.cpp LiveView.cpp NMEA.cpp SerialStream.cpp SocketStream.cpp USBStream.cpp common.cpp
+gcc $OPTIONS -I../osgART/include -W -Wall -fPIC -c Datum.cpp LiveView.cpp NMEA.cpp SerialStream.cpp SocketStream.cpp USBStream.cpp common.cpp
 check
 libtool --mode=link gcc $OPTIONS Datum.o LiveView.o NMEA.o SerialStream.o SocketStream.o USBStream.o common.o -lGL -lstdc++ -lexif -ljpeg -lm -losg -losgDB -losgGA -losgParticle -losgSim -losgText -losgUtil -losgViewer -lportaudio -ltiff -lz -lOpenThreads -o LiveView
 check
