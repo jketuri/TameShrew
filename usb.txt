@@ -1,8 +1,24 @@
 lsusb
 ls -l /dev/bus/usb/001/034
 sudo emacs /etc/udev/rules.d/50-usb.rules
-# SUBSYSTEM=="usb", MODE="0664", GROUP="a"
+# SUBSYSTEM=="usb", MODE="0666", GROUP="a"
 sudo udevadm control --reload
 sudo udevadm trigger
 ls -l /dev/bus/usb/001/034
 
+sudo emacs /etc/udev/rules.d/51-garmin.rules
+SYSFS{idVendor}=="091e", SYSFS{idProduct}=="0003", MODE="0666"
+sudo udevadm control --reload-rules
+
+sudo emacs /etc/modprobe.d/blacklist
+
+# prevent garmin_gps from being loaded so generic USB can be used instead
+blacklist garmin_gps
+
+sudo emacs /etc/modprobe.d/blacklist-garmin.conf
+blacklist garmin_gps
+
+sudo rmmod garmin_gps
+alias garmin_gps off
+
+sudo modprobe -r garmin_gps
