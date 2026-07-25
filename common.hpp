@@ -34,10 +34,10 @@ extern "C"
 #endif
 
 #ifndef DEBUG
-#define DEBUG
+// #define DEBUG
 #endif
 #ifndef DEBUG_MAP
-//#define DEBUG_MAP 0
+// #define DEBUG_MAP
 #endif
 #ifndef DEBUG_NMEA
 #define DEBUG_NMEA

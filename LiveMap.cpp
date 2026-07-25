@@ -990,8 +990,8 @@ void GpsListenerThread::run()
             LiveMapGarmin liveMapGarmin(liveMap);
             liveMapGarmin.readInputOutputStream(nmeaStream, NULL);
         } else {
-	  liveMap.nmea.readInputStream(nmeaStream, NULL);
-	}
+            liveMap.nmea.readInputStream(nmeaStream, NULL);
+        }
         cout << "GpsListenerThread ending" << endl;
     }
     catch (string *message) {

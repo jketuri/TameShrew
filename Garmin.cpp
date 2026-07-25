@@ -30,6 +30,10 @@ void Garmin::readInputOutputStream(
     packet.mPacketId = (unsigned short)Pid_Start_Session;
     inout.write((const char *)&packet, sizeof packet);
     inout << flush;
+    inout.write((const char *)&packet, sizeof packet);
+    inout << flush;
+    inout.write((const char *)&packet, sizeof packet);
+    inout << flush;
     USBBuffer *usbBuffer = dynamic_cast<USBBuffer *>(inout.rdbuf());
     bool started = false;
     while (!inout.eof() && (!stopped || *stopped)) {

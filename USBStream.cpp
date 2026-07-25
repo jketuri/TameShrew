@@ -117,12 +117,12 @@ USBBuffer::USBBuffer(string &deviceGUID, bool findIn, bool findOut, bool findInt
 USBBuffer::USBBuffer(uint16_t idVendor, uint16_t idProduct, bool findIn, bool findOut, bool findInterruptIn) : context(NULL), deviceHandle(NULL), inEndpoint(0), outEndpoint(0), interruptInEndpoint(0), buffer(NULL), count(0), bufferAllocated(false)
 {
     int returnValue = libusb_init(&context);
+    if (returnValue != LIBUSB_SUCCESS) {
+        throw Support::makeMessage("USBStream init", strerror(errno));
+    }
 #ifdef DEBUG_USB
     libusb_set_debug(context, 3);
 #endif
-    if (returnValue < 0) {
-        throw Support::makeMessage("USBStream init", strerror(errno));
-    }
 	libusb_device **devices = NULL;
 	ssize_t deviceCount = libusb_get_device_list(context, &devices);
     if (deviceCount < 0) {
@@ -133,7 +133,7 @@ USBBuffer::USBBuffer(uint16_t idVendor, uint16_t idProduct, bool findIn, bool fi
     cout << "usb deviceCount:" << deviceCount << endl;
     for (deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++) {
         returnValue = libusb_get_device_descriptor(devices[deviceIndex], &deviceDescriptor);
-        if (returnValue < 0) {
+        if (returnValue != LIBUSB_SUCCESS) {
             throw Support::makeMessage("USBStream get_device_descriptor", strerror(errno));
         }
         deviceHandle = libusb_open_device_with_vid_pid(NULL, deviceDescriptor.idVendor, deviceDescriptor.idProduct);
@@ -142,16 +142,19 @@ USBBuffer::USBBuffer(uint16_t idVendor, uint16_t idProduct, bool findIn, bool fi
         }
         unsigned char manufacturer[1024];
         returnValue = libusb_get_string_descriptor_ascii(deviceHandle, deviceDescriptor.iManufacturer, manufacturer, 1024);
-        if (returnValue < 0) {
+        if (returnValue != LIBUSB_SUCCESS) {
             manufacturer[0] = '\0';
         }
         unsigned char product[1024];
         returnValue = libusb_get_string_descriptor_ascii(deviceHandle, deviceDescriptor.iProduct, product, 1024);
-        if (returnValue < 0) {
+        if (returnValue != LIBUSB_SUCCESS) {
             product[0] = '\0';
         }
         libusb_config_descriptor *configDescriptor;
-        libusb_get_config_descriptor(devices[deviceIndex], 0, &configDescriptor);
+        returnValue = libusb_get_config_descriptor(devices[deviceIndex], 0, &configDescriptor);
+        if (returnValue != LIBUSB_SUCCESS) {
+            throw Support::makeMessage("USBStream libusb_get_config_descriptor", strerror(errno));
+        }
         cout << "idVendor=" << deviceDescriptor.idVendor << ", idProduct=" << deviceDescriptor.idProduct << ", number configurations=" << (int)deviceDescriptor.bNumConfigurations << ", device class=" << (int)deviceDescriptor.bDeviceClass << ", manufacturer=" << manufacturer << ", product=" << product << ", number interfaces=" << (int)configDescriptor->bNumInterfaces << ", number alternate settings=" << (int)configDescriptor->interface->num_altsetting << ", numEndpoints=" << (int)configDescriptor->interface->altsetting->bNumEndpoints << endl;
         for (int endpointNum = 0; endpointNum < (int)configDescriptor->interface->altsetting->bNumEndpoints; endpointNum++) {
             unsigned char endpointAddress = configDescriptor->interface->altsetting->endpoint[endpointNum].bEndpointAddress,
