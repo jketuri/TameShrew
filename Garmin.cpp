@@ -51,13 +51,13 @@ void Garmin::readInputOutputStream(
 #ifdef DEBUG_NMEA
             cout << "reading data packet" << endl;
 #endif
-        }
-        if (packet.mDataSize > 0) {
-            if (currentDataSize < packet.mDataSize) {
-                currentDataSize = packet.mDataSize;
-                data = new char[currentDataSize];
+            if (packet.mDataSize > 0) {
+                if (currentDataSize < packet.mDataSize) {
+                    currentDataSize = packet.mDataSize;
+                    data = new char[currentDataSize];
+                }
+                inout.read(data, packet.mDataSize);
             }
-            inout.read(data, packet.mDataSize);
         }
         if (packet.mPacketType == Pt_USBProtocolLayer) {
             if (packet.mPacketId == Pid_Session_Started) {
