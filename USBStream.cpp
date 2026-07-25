@@ -259,7 +259,7 @@ int USBBuffer::overflow(int c)
         }
 #else
         int returnValue = libusb_bulk_transfer(deviceHandle, outEndpoint, (unsigned char *)pbase(), numberOfBytesToWrite, &numberOfBytesWritten, 0);
-        if (returnValue < 0) {
+        if (returnValue != LIBUSB_SUCCESS) {
             throw Support::makeMessage("USBStream bulk_transfer", strerror(errno));
         }
 #endif
@@ -320,7 +320,7 @@ int USBBuffer::underflow()
     }
 #else
     int returnValue = interruptInEndpoint ? libusb_interrupt_transfer(deviceHandle, interruptInEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0) : libusb_bulk_transfer(deviceHandle, inEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0);
-    if (returnValue < 0) {
+    if (returnValue != LIBUSB_SUCCESS) {
         throw Support::makeMessage("USBStream bulk_transfer", strerror(errno));
     }
 #endif

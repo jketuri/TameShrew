@@ -1475,10 +1475,10 @@ void LiveMap::initialize()
         } else if (idVendor || !gpsUsbDeviceGuid.empty()) {
 #ifdef USE_WIN_USB
             cout << "Reading GPS from USB GUID=" << gpsUsbDeviceGuid << endl;
-            nmeaBuffer = new USBBuffer(gpsUsbDeviceGuid, true, false, false, true);
+            nmeaBuffer = new USBBuffer(gpsUsbDeviceGuid, true, true, false, true);
 #else
             cout << "Reading GPS from USB idVendor=" << idVendor << ", idProduct=" << idProduct << endl;
-            nmeaBuffer = new USBBuffer(idVendor, idProduct, true, false, false);
+            nmeaBuffer = new USBBuffer(idVendor, idProduct, true, true, false);
 #endif
         } else {
             nmeaBuffer = new SocketBuffer(socketHost, socketPort);
