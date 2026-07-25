@@ -198,7 +198,7 @@ USBBuffer::USBBuffer(uint16_t idVendor, uint16_t idProduct, bool findIn, bool fi
     if (libusb_kernel_driver_active(deviceHandle, 0)) {
         returnValue = libusb_detach_kernel_driver(deviceHandle, 0);
         if (returnValue != LIBUSB_SUCCESS) {
-            throw Support::makeMessage("USBStream libusb_detach_kernel_driver", strerror(errno));
+            throw Support::makeMessage("USBStream detach_kernel_driver", strerror(errno));
         }
     }
     returnValue = libusb_claim_interface(deviceHandle, 0);
@@ -319,9 +319,16 @@ int USBBuffer::underflow()
         }
     }
 #else
-    int returnValue = interruptInEndpoint ? libusb_interrupt_transfer(deviceHandle, interruptInEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0) : libusb_bulk_transfer(deviceHandle, inEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0);
-    if (returnValue != LIBUSB_SUCCESS) {
-        throw Support::makeMessage("USBStream bulk_transfer", strerror(errno));
+    if (fullRead) {
+        int returnValue = libusb_bulk_transfer(deviceHandle, inEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0);
+        if (returnValue != LIBUSB_SUCCESS) {
+            throw Support::makeMessage("USBStream bulk_transfer", strerror(errno));
+        }
+    } else {
+        int returnValue = libusb_interrupt_transfer(deviceHandle, interruptInEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0);
+        if (returnValue != LIBUSB_SUCCESS) {
+            throw Support::makeMessage("USBStream interrupt_transfer", strerror(errno));
+        }
     }
 #endif
 #ifdef DEBUG_USB

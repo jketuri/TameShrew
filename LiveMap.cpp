@@ -1478,7 +1478,7 @@ void LiveMap::initialize()
             nmeaBuffer = new USBBuffer(gpsUsbDeviceGuid, true, true, false, true);
 #else
             cout << "Reading GPS from USB idVendor=" << idVendor << ", idProduct=" << idProduct << endl;
-            nmeaBuffer = new USBBuffer(idVendor, idProduct, true, true, false);
+            nmeaBuffer = new USBBuffer(idVendor, idProduct, true, true, true);
 #endif
         } else {
             nmeaBuffer = new SocketBuffer(socketHost, socketPort);
