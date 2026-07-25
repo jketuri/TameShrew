@@ -290,7 +290,7 @@ int USBBuffer::underflow()
     int numberOfBytesToRead = blen() >> 1, numberOfBytesRead = 0;
 #endif
 #ifdef DEBUG_USB
-    cout << "bulk " << (interruptInEndpoint ? "interrupt " : "") << "read numberOfBytesToRead=" << numberOfBytesToRead << ", fullRead=" << fullRead << endl;
+    cout << (fullRead ? "bulk" : "interrupt") << " read numberOfBytesToRead=" << numberOfBytesToRead << ", fullRead=" << fullRead << endl;
 #endif
 #ifdef USE_WIN_USB
     for (;;) {
