@@ -324,15 +324,18 @@ int USBBuffer::underflow()
         if (returnValue != LIBUSB_SUCCESS) {
             throw Support::makeMessage("USBStream bulk_transfer", strerror(errno));
         }
+#ifdef DEBUG_USB
+        cout << "bulk read numberOfBytesRead=" << numberOfBytesRead << endl;
+#endif
     } else {
         int returnValue = libusb_interrupt_transfer(deviceHandle, interruptInEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0);
         if (returnValue != LIBUSB_SUCCESS) {
             throw Support::makeMessage("USBStream interrupt_transfer", strerror(errno));
         }
-    }
-#endif
 #ifdef DEBUG_USB
-    cout << "bulk read numberOfBytesRead=" << numberOfBytesRead << endl;
+        cout << "interrupt read numberOfBytesRead=" << numberOfBytesRead << endl;
+#endif
+    }
 #endif
     setg(gp, gp, gp + numberOfBytesRead);
     return numberOfBytesRead > 0 ? (*gp & 0xff) : -1;
