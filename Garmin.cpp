@@ -37,7 +37,14 @@ void Garmin::readInputOutputStream(
         cout << "reading packet" << endl;
 #endif
         memset(&packet, 0, sizeof packet);
-        inout.read((char *)&packet, sizeof packet);
+        inout.read((char *)&packet, PACKET_SIZE);
+        if (packet.mDataSize > 0) {
+            if (currentDataSize < packet.mDataSize) {
+                currentDataSize = packet.mDataSize;
+                data = new char[currentDataSize];
+            }
+            inout.read(data, packet.mDataSize);
+        }
 #ifdef DEBUG_NMEA
         cout << "packetType=" << (unsigned)packet.mPacketType
              << ", packetId=" << packet.mPacketId
@@ -45,19 +52,13 @@ void Garmin::readInputOutputStream(
 #endif
         if (packet.mPacketType == Pt_USBProtocolLayer
             && packet.mPacketId == Pid_Data_Available) {
-            if (usbBuffer) {
-                usbBuffer->setFullRead(true);
-            }
 #ifdef DEBUG_NMEA
             cout << "reading data packet" << endl;
 #endif
-            if (packet.mDataSize > 0) {
-                if (currentDataSize < packet.mDataSize) {
-                    currentDataSize = packet.mDataSize;
-                    data = new char[currentDataSize];
-                }
-                inout.read(data, packet.mDataSize);
+            if (usbBuffer) {
+                usbBuffer->setFullRead(true);
             }
+            continue;
         }
         if (packet.mPacketType == Pt_USBProtocolLayer) {
             if (packet.mPacketId == Pid_Session_Started) {
@@ -73,7 +74,7 @@ void Garmin::readInputOutputStream(
 #ifdef DEBUG_NMEA
                 cout << "writing command Start Pvt Data size=" << packet.mDataSize << endl;
 #endif
-                inout.write((const char *)&packet, sizeof packet);
+                inout.write((const char *)&packet, PACKET_SIZE);
                 inout.write((const char *)&commandIdType, sizeof commandIdType);
                 inout << flush;
             }
