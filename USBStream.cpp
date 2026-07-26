@@ -319,22 +319,31 @@ int USBBuffer::underflow()
         }
     }
 #else
-    if (fullRead) {
-        int returnValue = libusb_bulk_transfer(deviceHandle, inEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0);
-        if (returnValue != LIBUSB_SUCCESS) {
-            throw Support::makeMessage("USBStream bulk_transfer", strerror(errno));
-        }
+    for (;;) {
+        if (fullRead) {
+            int returnValue = libusb_bulk_transfer(deviceHandle, inEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0);
+            if (returnValue != LIBUSB_SUCCESS) {
+                throw Support::makeMessage("USBStream bulk_transfer", strerror(errno));
+            }
 #ifdef DEBUG_USB
-        cout << "bulk read numberOfBytesRead=" << numberOfBytesRead << endl;
+            cout << "bulk read numberOfBytesRead=" << numberOfBytesRead << endl;
 #endif
-    } else {
-        int returnValue = libusb_interrupt_transfer(deviceHandle, interruptInEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0);
-        if (returnValue != LIBUSB_SUCCESS) {
-            throw Support::makeMessage("USBStream interrupt_transfer", strerror(errno));
-        }
+            if (numberOfBytesRead == 0) {
+                fullRead = false;
+            }
+            else {
+                break;
+            }
+        } else {
+            int returnValue = libusb_interrupt_transfer(deviceHandle, interruptInEndpoint, (unsigned char *)gp, numberOfBytesToRead, &numberOfBytesRead, 0);
+            if (returnValue != LIBUSB_SUCCESS) {
+                throw Support::makeMessage("USBStream interrupt_transfer", strerror(errno));
+            }
 #ifdef DEBUG_USB
-        cout << "interrupt read numberOfBytesRead=" << numberOfBytesRead << endl;
+            cout << "interrupt read numberOfBytesRead=" << numberOfBytesRead << endl;
 #endif
+            break;
+        }
     }
 #endif
     setg(gp, gp, gp + numberOfBytesRead);

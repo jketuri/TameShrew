@@ -29,6 +29,8 @@ typedef double float64;
 
 #pragma pack( push, 1)
 
+#define PACKET_SIZE 12
+
 typedef struct {
     unsigned char  mPacketType;
     unsigned char  mReserved1;
