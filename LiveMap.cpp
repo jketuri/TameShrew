@@ -3508,22 +3508,24 @@ void LiveMap::readGPTs(const string &dirPath, TrackUpdateCallback *trackUpdateCa
                 continue;
             }
 #endif
-            if (!trackNotes) {
-                osg::ref_ptr<osg::Switch> trackSwitch = new osg::Switch();
-                trackSwitch->setUpdateCallback(trackUpdateCallback);
-                osg::ref_ptr<osg::Group> trackGroup = new osg::Group();
-                trackSwitch->addChild(trackGroup.get());
-                trackSwitch->setValue(0, false);
-                showTracks = true;
-                this->trackGroup = trackGroup.get();
-                osg::ref_ptr<TrackData> trackData = readGPT(pathName, false);
-                trackSwitch->setUserData(trackData.get());
-                rootTransform.addChild(trackSwitch.get());
-                trackSwitches.insert(trackSwitches.end(), trackSwitch.get());
-            } else {
-                showTracks = false;
-                this->trackGroup = NULL;
-                readGPT(pathName, trackNotes);
+            if (showTracks) {
+                if (!trackNotes) {
+                    osg::ref_ptr<osg::Switch> trackSwitch = new osg::Switch();
+                    trackSwitch->setUpdateCallback(trackUpdateCallback);
+                    osg::ref_ptr<osg::Group> trackGroup = new osg::Group();
+                    trackSwitch->addChild(trackGroup.get());
+                    trackSwitch->setValue(0, false);
+                    showTracks = true;
+                    this->trackGroup = trackGroup.get();
+                    osg::ref_ptr<TrackData> trackData = readGPT(pathName, false);
+                    trackSwitch->setUserData(trackData.get());
+                    rootTransform.addChild(trackSwitch.get());
+                    trackSwitches.insert(trackSwitches.end(), trackSwitch.get());
+                } else {
+                    showTracks = false;
+                    this->trackGroup = NULL;
+                    readGPT(pathName, trackNotes);
+                }
             }
         }
 #ifdef WIN32

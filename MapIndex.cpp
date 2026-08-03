@@ -78,8 +78,9 @@ const MapEntry *MapIndex::search(Coordinates &coordinates, int scaleIndex)
          aMapEntry++) {
         MapEntry &mapEntry = **aMapEntry;
         if (coordinates.x >= mapEntry.coordinates1.x && coordinates.x <= mapEntry.coordinates2.x &&
-            coordinates.y >= mapEntry.coordinates2.y && coordinates.y <= mapEntry.coordinates1.y)
+            coordinates.y >= mapEntry.coordinates2.y && coordinates.y <= mapEntry.coordinates1.y) {
             return &mapEntry;
+        }
     }
     return (MapEntry *)NULL;
 }
