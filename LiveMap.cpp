@@ -1345,8 +1345,8 @@ void LiveMap::initialize()
     for (i = 0; i < mapTextureCount; i++) {
         osg::ref_ptr<osg::Switch> mapSwitch = new osg::Switch();
         mapSwitch->setUpdateCallback(mapUpdateCallback.get());
-        osg::ref_ptr<osg::Group> mapGroup = new osg::Group();
-        mapSwitch->addChild(mapGroup.get());
+        osg::ref_ptr<osg::Group> subMapGroup = new osg::Group();
+        mapSwitch->addChild(subMapGroup.get());
         mapSwitch->setValue(0, false);
         osg::ref_ptr<MapTextureData> mapTextureData = new MapTextureData();
         mapTextureDatas[i] = mapTextureData.get();
