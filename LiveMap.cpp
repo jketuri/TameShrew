@@ -2321,15 +2321,10 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
         } else {
             osg::ref_ptr<osg::Geometry> mapGeometry = new osg::Geometry();
             osg::ref_ptr<osg::Vec3Array> mapVertexArray = new osg::Vec3Array(4);
-            for (i = 0; i < 4; i++)
+            for (i = 0; i < 4; i++) {
+                // cout << "!! vertexCoordinates=" << mapTexture.vertexCoordinatesArray[i] << endl;
                 (*mapVertexArray)[i].set(mapTexture.vertexCoordinatesArray[i].x, 0.0f, mapTexture.vertexCoordinatesArray[i].y);
-            /*
-              {for (int i=0;i<4;i++) {
-              cout << i << ".x=" << mapVertexArray[i].x() << endl;
-              cout << i << ".y=" << mapVertexArray[i].y() << endl;
-              cout << i << ".z=" << mapVertexArray[i].z() << endl;
-              }}
-            */
+            }
             mapGeometry->setVertexArray(mapVertexArray.get());
             mapGeometry->setColorArray(whiteArray);
             mapGeometry->setColorBinding(osg::Geometry::BIND_OVERALL);
