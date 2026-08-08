@@ -1339,14 +1339,13 @@ void LiveMap::initialize()
         mapTextureCount = mapSizePixels / mapTextureSize;
         mapTextureCount *= mapTextureCount;
     }
-    mapGroup = new osg::Group();
     osg::ref_ptr<MapUpdateCallback> mapUpdateCallback = new MapUpdateCallback(*this);
     mapTextureDatas = new MapTextureData *[mapTextureCount];
     for (i = 0; i < mapTextureCount; i++) {
         osg::ref_ptr<osg::Switch> mapSwitch = new osg::Switch();
         mapSwitch->setUpdateCallback(mapUpdateCallback.get());
-        osg::ref_ptr<osg::Group> subMapGroup = new osg::Group();
-        mapSwitch->addChild(subMapGroup.get());
+        osg::ref_ptr<osg::Group> mapGroup = new osg::Group();
+        mapSwitch->addChild(mapGroup.get());
         mapSwitch->setValue(0, true);
         osg::ref_ptr<MapTextureData> mapTextureData = new MapTextureData();
         mapTextureDatas[i] = mapTextureData.get();
