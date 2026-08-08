@@ -1347,7 +1347,7 @@ void LiveMap::initialize()
         mapSwitch->setUpdateCallback(mapUpdateCallback.get());
         osg::ref_ptr<osg::Group> subMapGroup = new osg::Group();
         mapSwitch->addChild(subMapGroup.get());
-        mapSwitch->setValue(0, false);
+        mapSwitch->setValue(0, true);
         osg::ref_ptr<MapTextureData> mapTextureData = new MapTextureData();
         mapTextureDatas[i] = mapTextureData.get();
         mapSwitch->setUserData(mapTextureData.get());
