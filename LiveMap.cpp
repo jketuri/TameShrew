@@ -2322,7 +2322,7 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
             osg::ref_ptr<osg::Vec3Array> mapVertexArray = new osg::Vec3Array(4);
             for (i = 0; i < 4; i++) {
                 // cout << "!! vertexCoordinates=" << mapTexture.vertexCoordinatesArray[i] << endl;
-                (*mapVertexArray)[i].set(mapTexture.vertexCoordinatesArray[i].x, 0.0f, mapTexture.vertexCoordinatesArray[i].y);
+                (*mapVertexArray)[i].set(0.0, mapTexture.vertexCoordinatesArray[i].x, mapTexture.vertexCoordinatesArray[i].y);
             }
             mapGeometry->setVertexArray(mapVertexArray.get());
             mapGeometry->setColorArray(whiteArray);
