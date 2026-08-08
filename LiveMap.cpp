@@ -2356,6 +2356,7 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
         mapTexture.mapTextureData = mapTextureData;
         mapTextureAddNumber++;
         if (generateDatabase) {
+            osg::ref_ptr<osg::Group> mapGroup = new osg::Group();
             mapGroup->setStateSet(stateSet.get());
             if (mapGroup->getNumChildren() > 0) {
                 mapGroup->setChild(0, map.get());

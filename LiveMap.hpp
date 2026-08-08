@@ -526,7 +526,6 @@ public:
     osg::ref_ptr<osg::Geode> redObstacle;
     osg::ref_ptr<osg::Geode> greenObstacle;
     osg::ref_ptr<osg::Geode> blueObstacle;
-    osg::ref_ptr<osg::Group> mapGroup;
     osg::ref_ptr<osg::Group> showTrackGroup;
     osg::ref_ptr<osg::Group> singlePhotoGroup;
     osg::ref_ptr<osg::NodeCallback> obstacleUpdateCallback;
