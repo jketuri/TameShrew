@@ -2322,18 +2322,18 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
             osg::ref_ptr<osg::Vec3Array> mapVertexArray = new osg::Vec3Array(4);
             for (i = 0; i < 4; i++) {
                 // cout << "!! vertexCoordinates=" << mapTexture.vertexCoordinatesArray[i] << endl;
-                (*mapVertexArray)[i].set(0.0, mapTexture.vertexCoordinatesArray[i].x, mapTexture.vertexCoordinatesArray[i].y);
+                (*mapVertexArray)[i].set(mapTexture.vertexCoordinatesArray[i].x, 0.0, mapTexture.vertexCoordinatesArray[i].y);
             }
             mapGeometry->setVertexArray(mapVertexArray.get());
             mapGeometry->setColorArray(whiteArray);
             mapGeometry->setColorBinding(osg::Geometry::BIND_OVERALL);
             mapGeometry->setNormalArray(normalArray.get());
             mapGeometry->setNormalBinding(osg::Geometry::BIND_OVERALL);
-            osg::ref_ptr<osg::Vec2Array> texCoordArray = new osg::Vec2Array(4);
-            (*texCoordArray)[0].set(0.0f, 0.0f);
-            (*texCoordArray)[1].set(1.0f, 0.0f);
-            (*texCoordArray)[2].set(1.0f, 1.0f);
-            (*texCoordArray)[3].set(0.0f, 1.0f);
+            osg::ref_ptr<osg::Vec2Array> texCoordArray = new osg::Vec2Array();
+            texCoordArray->push_back(osg::Vec2(0.0f, 0.0f));
+            texCoordArray->push_back(osg::Vec2(1.0f, 0.0f));
+            texCoordArray->push_back(osg::Vec2(1.0f, 1.0f));
+            texCoordArray->push_back(osg::Vec2(0.0f, 1.0f));
             mapGeometry->setTexCoordArray(0, texCoordArray.get());
             osg::ref_ptr<osg::PrimitiveSet> primitiveSet = new osg::DrawArrays(osg::PrimitiveSet::QUADS, 0, 4);
             mapGeometry->addPrimitiveSet(primitiveSet.get());
