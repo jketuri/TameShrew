@@ -1517,7 +1517,7 @@ LiveMap::~LiveMap() noexcept(false)
     delete mapReaderThread;
     delete trackShowThread;
     if (raster) {
-        delete raster;
+        delete[] raster;
     }
     if (!disableAudio) {
         if (audioSignalStreamActive) {
@@ -2132,10 +2132,10 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
             cout << "raster=" << raster << endl;
 #endif
             if (raster) {
-                delete raster;
+                delete[] raster;
             }
             if (elevationRaster) {
-                delete elevationRaster;
+                delete[] elevationRaster;
             }
             lastMapEntry = mapTexture.mapEntry;
             TIFF *tiff = TIFFOpen(mapTexture.mapEntry->filePath.c_str(), "r");
@@ -2187,7 +2187,7 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
         //      _TIFFmemset(mapTexture.raster, 0xff, rasterSize * sizeof(uint32));
         uint32 i;
         for (i = 0; i < rasterSize; i++) {
-            mapTexture.raster[i] = 0xffffff;
+            mapTexture.raster[i] = 0xffffffff;
         }
         uint32 xOffset = mapTexture.horizontalRasterIndex * mapTexture.width,
             yOffset = mapTexture.verticalRasterIndex * mapTexture.height,
@@ -2508,7 +2508,7 @@ void LiveMap::updateMap(osg::Node *node)
     if (update) {
         mapGroup.setStateSet(mapTextureData.stateSet.get());
         if (mapTextureData.raster) {
-            delete mapTextureData.raster;
+            delete[] mapTextureData.raster;
             mapTextureData.raster = NULL;
         }
         if (mapGroup.getNumChildren() > 0) {
