@@ -1335,6 +1335,18 @@ void LiveMap::initialize()
     */
     //mapTextureSize=0;
     //viewer->realize();
+    /*
+    Producer::ref_ptr<Producer::CameraConfig> cameraConfig = viewer->getCameraConfig();
+    Producer::ref_ptr<Producer::Camera> camera = cameraConfig->getCamera(0);
+    camera->getProjectionRectangle(projectionX, projectionY, projectionWidth, projectionHeight);
+    */
+    osgViewer::Viewer::Cameras cameras;
+    viewer->getCameras(cameras, false);
+    osg::Camera *camera = cameras[0];
+    osgViewer::Viewer::Windows windows;
+    viewer->getWindows(windows);
+    osgViewer::GraphicsWindow *window = windows[0];
+    mapTextureSize = window->getState()->get<osg::GLExtensions>()->maxTextureSize / 4;
     if (mapSizePixels) {
         mapTextureCount = mapSizePixels / mapTextureSize;
         mapTextureCount *= mapTextureCount;
@@ -1352,18 +1364,6 @@ void LiveMap::initialize()
         mapSwitch->setUserData(mapTextureData.get());
         rootTransform->addChild(mapSwitch.get());
     }
-    /*
-    Producer::ref_ptr<Producer::CameraConfig> cameraConfig = viewer->getCameraConfig();
-    Producer::ref_ptr<Producer::Camera> camera = cameraConfig->getCamera(0);
-    camera->getProjectionRectangle(projectionX, projectionY, projectionWidth, projectionHeight);
-    */
-    osgViewer::Viewer::Cameras cameras;
-    viewer->getCameras(cameras, false);
-    osg::Camera *camera = cameras[0];
-    osgViewer::Viewer::Windows windows;
-    viewer->getWindows(windows);
-    osgViewer::GraphicsWindow *window = windows[0];
-    mapTextureSize = window->getState()->get<osg::GLExtensions>()->maxTextureSize / 4;
     window->getWindowRectangle(projectionX, projectionY, projectionWidth, projectionHeight);
     cout << "projectionX=" << projectionX << ",projectionY=" << projectionY << ",projectionWidth=" << projectionWidth << ",projectionHeight=" << projectionHeight << endl;
     camera->setClearColor(*white);
