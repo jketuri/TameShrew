@@ -1356,8 +1356,8 @@ void LiveMap::initialize()
     for (i = 0; i < mapTextureCount; i++) {
         osg::ref_ptr<osg::Switch> mapSwitch = new osg::Switch();
         mapSwitch->setUpdateCallback(mapUpdateCallback.get());
-        osg::ref_ptr<osg::Group> mapGroup = new osg::Group();
-        mapSwitch->addChild(mapGroup.get());
+        osg::ref_ptr<osg::MatrixTransform> mapTransform = new osg::MatrixTransform();
+        mapSwitch->addChild(mapTransform.get());
         mapSwitch->setValue(0, true);
         osg::ref_ptr<MapTextureData> mapTextureData = new MapTextureData();
         mapTextureDatas[i] = mapTextureData.get();
@@ -2356,16 +2356,16 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
         mapTexture.mapTextureData = mapTextureData;
         mapTextureAddNumber++;
         if (generateDatabase) {
-            osg::ref_ptr<osg::Group> mapGroup = new osg::Group();
-            mapGroup->setStateSet(stateSet.get());
-            if (mapGroup->getNumChildren() > 0) {
-                mapGroup->setChild(0, map.get());
+            osg::ref_ptr<osg::MatrixTransform> mapTransform = new osg::MatrixTransform();
+            mapTransform->setStateSet(stateSet.get());
+            if (mapTransform->getNumChildren() > 0) {
+                mapTransform->setChild(0, map.get());
             } else {
-                mapGroup->addChild(map.get());
+                mapTransform->addChild(map.get());
             }
             ostringstream fileName;
             fileName << databaseDirectory << FILE_SEPARATOR << mapTexture.vertexCoordinatesArray[0].x << '-' << mapTexture.vertexCoordinatesArray[0].y << ".osg";
-            osgDB::writeNodeFile(*mapGroup.get(), fileName.str());
+            osgDB::writeNodeFile(*mapTransform.get(), fileName.str());
             vesselPosition.x = mapTexture.vertexCoordinatesArray[0].x + (mapTexture.vertexCoordinatesArray[1].x - mapTexture.vertexCoordinatesArray[0].x) / 2.0;
             vesselPosition.y = mapTexture.vertexCoordinatesArray[0].y + (mapTexture.vertexCoordinatesArray[2].y - mapTexture.vertexCoordinatesArray[1].y) / 2.0;
             gpsVesselPosition = vesselPosition;
@@ -2488,7 +2488,7 @@ void LiveMap::updateRoot(osg::Node *node) {
 void LiveMap::updateMap(osg::Node *node)
 {
     osg::Switch &mapSwitch = *(osg::Switch *)node;
-    osg::Group &mapGroup = *(osg::Group *)mapSwitch.getChild(0);
+    osg::MatrixTransform &mapTransform = *(osg::MatrixTransform *)mapSwitch.getChild(0);
     MapTextureData &mapTextureData = *(MapTextureData *)mapSwitch.getUserData();
     if (!mapTextureData.map.valid()) {
         return;
@@ -2498,24 +2498,24 @@ void LiveMap::updateMap(osg::Node *node)
         mapSwitch.setValue(0, false);
     }
     bool update = false;
-    if (mapGroup.getNumChildren() > 0) {
-        osg::Geode &map = (osg::Geode &)*mapGroup.getChild(0);
+    if (mapTransform.getNumChildren() > 0) {
+        osg::Geode &map = (osg::Geode &)*mapTransform.getChild(0);
         if (mapTextureData.map.get() != &map) {
             update = true;
         }
     }
     else update = true;
     if (update) {
-        mapGroup.setStateSet(mapTextureData.stateSet.get());
+        mapTransform.setStateSet(mapTextureData.stateSet.get());
         if (mapTextureData.raster) {
             delete[] mapTextureData.raster;
             mapTextureData.raster = NULL;
         }
-        if (mapGroup.getNumChildren() > 0) {
-            mapGroup.setChild(0, mapTextureData.map.get());
+        if (mapTransform.getNumChildren() > 0) {
+            mapTransform.setChild(0, mapTextureData.map.get());
         }
         else {
-            mapGroup.addChild(mapTextureData.map.get());
+            mapTransform.addChild(mapTextureData.map.get());
         }
     }
     if (hideMapsOnObstacles && !inHazardZone && !inSafetyZone && !mapSwitch.getValue(0)) {
