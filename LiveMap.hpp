@@ -154,7 +154,7 @@ public:
     {
         (void)&eventAdapter;
         (void)&actionAdapter;
-        //computePosition(homeEye, homeCenter, homeUp);
+        setHomePosition(homeEye, homeCenter, homeUp);
     }
 
     void setCameraData(const osg::Vec3 &eye, const osg::Vec3 &center, const osg::Vec3 &up)
@@ -162,7 +162,7 @@ public:
         homeEye = eye;
         homeCenter = center;
         homeUp = up;
-        //computePosition(eye, center, up);
+        setHomePosition(eye, center, up);
     }
 
 protected:
