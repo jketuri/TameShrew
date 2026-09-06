@@ -150,13 +150,6 @@ class Manipulator : public osgGA::TrackballManipulator
 
 public:
 
-    virtual void home(const osgGA::GUIEventAdapter &eventAdapter, osgGA::GUIActionAdapter &actionAdapter)
-    {
-        (void)&eventAdapter;
-        (void)&actionAdapter;
-        setHomePosition(homeEye, homeCenter, homeUp);
-    }
-
     void setCameraData(const osg::Vec3 &eye, const osg::Vec3 &center, const osg::Vec3 &up)
     {
         homeEye = eye;
