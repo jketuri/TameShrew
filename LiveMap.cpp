@@ -1979,8 +1979,8 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
         cout << "numberOfHorizontalRasters=" << numberOfHorizontalRasters << endl;
         cout << "numberOfVerticalRasters=" << numberOfVerticalRasters << endl;
 #endif
-        double xSize = (mapEntry->coordinates2.x - mapEntry->coordinates1.x) / (double)numberOfHorizontalRasters * xRatio,
-            ySize = (mapEntry->coordinates1.y - mapEntry->coordinates2.y) / (double)numberOfVerticalRasters * yRatio;
+        double xSize = (mapEntry->coordinates2.x - mapEntry->coordinates1.x) / (double)numberOfHorizontalRasters,
+            ySize = (mapEntry->coordinates1.y - mapEntry->coordinates2.y) / (double)numberOfVerticalRasters;
         for (int verticalRasterIndex = 0; verticalRasterIndex < numberOfVerticalRasters; verticalRasterIndex++) {
             for (int horizontalRasterIndex = 0; horizontalRasterIndex < numberOfHorizontalRasters; horizontalRasterIndex++) {
 #ifdef DEBUG_MAP
@@ -2330,10 +2330,12 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
             mapGeometry->setNormalArray(normalArray.get());
             mapGeometry->setNormalBinding(osg::Geometry::BIND_OVERALL);
             osg::ref_ptr<osg::Vec2Array> texCoordArray = new osg::Vec2Array();
+            float uMax = (float)width1  / (float)mapTexture.width;
+            float vMax = (float)height1 / (float)mapTexture.height;
             texCoordArray->push_back(osg::Vec2(0.0f, 0.0f));
-            texCoordArray->push_back(osg::Vec2(1.0f, 0.0f));
-            texCoordArray->push_back(osg::Vec2(1.0f, 1.0f));
-            texCoordArray->push_back(osg::Vec2(0.0f, 1.0f));
+            texCoordArray->push_back(osg::Vec2(uMax, 0.0f));
+            texCoordArray->push_back(osg::Vec2(uMax, vMax));
+            texCoordArray->push_back(osg::Vec2(0.0f, vMax));
             mapGeometry->setTexCoordArray(0, texCoordArray.get());
             osg::ref_ptr<osg::PrimitiveSet> primitiveSet = new osg::DrawArrays(osg::PrimitiveSet::QUADS, 0, 4);
             mapGeometry->addPrimitiveSet(primitiveSet.get());
