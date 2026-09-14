@@ -2300,7 +2300,7 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
             geometry->setColorBinding(osg::Geometry::BIND_OVERALL);
             geometry->setTexCoordArray(0, t2.get());
             for (uint32 verticalIndex = 0; verticalIndex < verticalCount - 1; verticalIndex++) {
-                osg::ref_ptr<osg::DrawElementsUShort> drawElements = new osg::DrawElementsUShort(GL_QUAD_STRIP, 2 * horizontalCount);
+                osg::ref_ptr<osg::DrawElementsUInt> drawElements = new osg::DrawElementsUInt(GL_QUAD_STRIP, 2 * horizontalCount);
                 geometry->addPrimitiveSet(drawElements.get());
                 int i = 0;
                 for (uint32 horizontalIndex = 0; horizontalIndex < horizontalCount; horizontalIndex++) {
