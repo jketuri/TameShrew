@@ -2269,11 +2269,13 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
                 osg::Vec2 tex(0.0, 0.0);
                 double radius = scaleIndex == 0 ? 5000.0 : 500.0,
                     sign = mapTexture.verticalRasterIndex % 2 == 0 ? mapTexture.horizontalRasterIndex % 2 == 0 ? 1.0 : -1.0 : mapTexture.horizontalRasterIndex % 2 == 0 ? -1.0 : 1.0;
+                float uMax = (float)width1  / (float)mapTexture.width,
+                    vMax = (float)height1 / (float)mapTexture.height;
                 int i = 0;
                 for (uint32 verticalIndex = 0; verticalIndex < verticalCount; verticalIndex++) {
                     double yFactor = (double)verticalIndex / verticalNumber;
                     pos.z() = mapTexture.vertexCoordinatesArray[0].y + yFactor * verticalSize;
-                    tex.y() = yFactor;
+                    tex.y() = yFactor * vMax;
                     double ySin = yFactor > 0.0 && yFactor < 1.0 ? fabs(sin(yFactor * osg::PI)) : 0.0;
                     ySin = sign * ySin * ySin * ySin * ySin;
                     for (uint32 horizontalIndex = 0; horizontalIndex < horizontalCount; horizontalIndex++) {
@@ -2281,7 +2283,7 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
                             xSin = xFactor > 0.0 && xFactor < 1.0 ? fabs(sin(xFactor * osg::PI)) : 0.0;
                         pos.x() = mapTexture.vertexCoordinatesArray[0].x + xFactor * horizontalSize;
                         pos.y() = xSin * xSin * xSin * xSin * ySin * radius;
-                        tex.x() = xFactor;
+                        tex.x() = xFactor * uMax;
                         //cout << "pos.x=" << pos.x() << ",pos.y=" << pos.y() << ",pos.z=" << pos.z() << ",tex.x=" << tex.x() << ",tex.y=" << tex.y() << endl;
                         (*v3.get())[i].set(pos.x(), pos.y(), pos.z());
                         /*
@@ -2330,8 +2332,8 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
             mapGeometry->setNormalArray(normalArray.get());
             mapGeometry->setNormalBinding(osg::Geometry::BIND_OVERALL);
             osg::ref_ptr<osg::Vec2Array> texCoordArray = new osg::Vec2Array();
-            float uMax = (float)width1  / (float)mapTexture.width;
-            float vMax = (float)height1 / (float)mapTexture.height;
+            float uMax = (float)width1  / (float)mapTexture.width,
+                vMax = (float)height1 / (float)mapTexture.height;
             texCoordArray->push_back(osg::Vec2(0.0f, 0.0f));
             texCoordArray->push_back(osg::Vec2(uMax, 0.0f));
             texCoordArray->push_back(osg::Vec2(uMax, vMax));
