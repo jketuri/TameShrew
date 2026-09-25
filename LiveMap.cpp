@@ -2169,7 +2169,7 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
                     throw new string("new raster failed");
                 }
                 for (uint32 row = 0; row < mapTexture.mapEntry->elevationMapEntry->imageHeight; row++) {
-                    TIFFReadScanline(tiff, elevationRaster + (row * mapTexture.mapEntry->elevationMapEntry->imageWidth), row);
+                    TIFFReadScanline(tiff, elevationRaster + ((mapTexture.mapEntry->elevationMapEntry->imageHeight - 1 - row) * mapTexture.mapEntry->elevationMapEntry->imageWidth), row);
                 }
                 TIFFClose(tiff);
             }
