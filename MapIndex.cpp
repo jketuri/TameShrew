@@ -224,7 +224,7 @@ void MapIndex::generate(string &dirPath, int scaleIndex)
         TIFFGetField(tiff, TIFFTAG_IMAGEWIDTH, &mapEntry.imageWidth);
         TIFFGetField(tiff, TIFFTAG_IMAGELENGTH, &mapEntry.imageHeight);
         TIFFClose(tiff);
-        string elevationDataFilePathBase = string(dirPath + FILE_SEPARATOR + "elevation" + FILE_SEPARATOR + name.substr(0, name.length() - 4));
+        string elevationDataFilePathBase = string(dirPath + FILE_SEPARATOR + "elevation" + FILE_SEPARATOR + name.substr(0, name.length() - 4)) + "_DEM2";
         if ((lowerCase = !_access((elevationDataFilePathBase + ".tif").c_str(), 0)) || !_access((elevationDataFilePathBase + ".TIF").c_str(), 0)) {
             class MapEntry &elevationMapEntry = *new MapEntry();
             elevationMapEntry.filePath = elevationDataFilePathBase + (lowerCase ? ".tif" : ".TIF");
