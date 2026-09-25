@@ -708,7 +708,7 @@ public:
 
     static inline double powerOf2(double value)
     {
-        return pow(2.0, (double)(long)(log10(value) / log10(2.0) + 0.5));
+        return pow(2.0, ceil(log10(value) / log10(2.0)));
     }
 
     static bool mapTexturePredicate(const MapTexture *mapTexture1, const MapTexture *mapTexture2)
