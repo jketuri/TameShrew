@@ -1960,8 +1960,6 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
         numberOfMaps++;
         GLint width = (GLint)powerOf2((double)mapEntry->imageWidth),
             height = (GLint)powerOf2((double)mapEntry->imageHeight);
-        double xRatio = (double)width / (double)mapEntry->imageWidth,
-            yRatio = (double)height / (double)mapEntry->imageHeight;
         int numberOfHorizontalRasters = 1;
         while (width > mapTextureSize) {
             numberOfHorizontalRasters <<= 1;
@@ -1989,8 +1987,6 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
 #endif
                 MapTexture &mapTexture = *new MapTexture();
                 mapTexture.mapEntry = mapEntry;
-                mapTexture.xRatio = xRatio;
-                mapTexture.yRatio = yRatio;
                 mapTexture.verticalRasterIndex = verticalRasterIndex;
                 mapTexture.horizontalRasterIndex = horizontalRasterIndex;
                 mapTexture.width = width;
@@ -2223,17 +2219,19 @@ void LiveMap::readMaps(MapEntry *selectedMapEntry) {
                 t2 = new osg::Vec2Array(horizontalCount * verticalCount);
                 osg::Vec3 pos(0.0, 0.0, 0.0);
                 osg::Vec2 tex(0.0, 0.0);
+                float uMax = (float)width1  / (float)mapTexture.width,
+                    vMax = (float)height1 / (float)mapTexture.height;
                 int i = 0;
                 for (uint32 verticalIndex = 0; verticalIndex < verticalCount; verticalIndex++) {
                     double yFactor = (double)verticalIndex / verticalNumber;
                     pos.z() = mapTexture.vertexCoordinatesArray[0].y + yFactor * verticalSize;
-                    tex.y() = yFactor;
-                    uint32 yOffset = (uint32)((double)(pos.z() - mapTexture.mapEntry->elevationMapEntry->coordinates2.y) / (double)(mapTexture.mapEntry->elevationMapEntry->coordinates1.y - mapTexture.mapEntry->elevationMapEntry->coordinates2.y) * (double)mapTexture.mapEntry->elevationMapEntry->imageHeight * mapTexture.yRatio + .5);
+                    tex.y() = yFactor * vMax;
+                    uint32 yOffset = (uint32)((double)(pos.z() - mapTexture.mapEntry->elevationMapEntry->coordinates2.y) / (double)(mapTexture.mapEntry->elevationMapEntry->coordinates1.y - mapTexture.mapEntry->elevationMapEntry->coordinates2.y) * (double)mapTexture.mapEntry->elevationMapEntry->imageHeight);
                     for (uint32 horizontalIndex = 0; horizontalIndex < horizontalCount; horizontalIndex++) {
                         double xFactor = (double)horizontalIndex / horizontalNumber;
                         pos.x() = mapTexture.vertexCoordinatesArray[0].x + xFactor * horizontalSize;
-                        tex.x() = xFactor;
-                        uint32 xOffset = (uint32)((double)(pos.x() - mapTexture.mapEntry->elevationMapEntry->coordinates1.x) / (double)(mapTexture.mapEntry->elevationMapEntry->coordinates2.x - mapTexture.mapEntry->elevationMapEntry->coordinates1.x) * (double)mapTexture.mapEntry->elevationMapEntry->imageWidth * mapTexture.xRatio + .5);
+                        tex.x() = xFactor * uMax;
+                        uint32 xOffset = (uint32)((double)(pos.x() - mapTexture.mapEntry->elevationMapEntry->coordinates1.x) / (double)(mapTexture.mapEntry->elevationMapEntry->coordinates2.x - mapTexture.mapEntry->elevationMapEntry->coordinates1.x) * (double)mapTexture.mapEntry->elevationMapEntry->imageWidth);
                         double elevation = yOffset < mapTexture.mapEntry->elevationMapEntry->imageHeight && xOffset < mapTexture.mapEntry->elevationMapEntry->imageWidth ? elevationToMeters((double)elevationRaster[yOffset * mapTexture.mapEntry->elevationMapEntry->imageWidth + xOffset]) * verticalScale : 0;
                         (*v3.get())[i].set(pos.x(), -elevation, pos.z());
                         //(*v3.get())[i].set(pos.x(), 0.0, pos.z());

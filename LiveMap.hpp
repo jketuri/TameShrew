@@ -171,18 +171,17 @@ public:
     Coordinates vertexCoordinatesArray[4];
     MapTextureData *mapTextureData;
     const MapEntry *mapEntry;
-    double xRatio, yRatio;
     double sumOfDistances;
     int verticalRasterIndex;
     int horizontalRasterIndex;
     uint32 width, height;
     uint32 *raster;
 
-    MapTexture() : mapTextureData(NULL), mapEntry(NULL), xRatio(0.0), yRatio(0.0), sumOfDistances(0.0), verticalRasterIndex(0), horizontalRasterIndex(0), width(0), height(0), raster(NULL)
+    MapTexture() : mapTextureData(NULL), mapEntry(NULL), sumOfDistances(0.0), verticalRasterIndex(0), horizontalRasterIndex(0), width(0), height(0), raster(NULL)
     {
     }
 
-    MapTexture(const MapTexture &mapTexture) : mapTextureData(mapTexture.mapTextureData), mapEntry(mapTexture.mapEntry), xRatio(mapTexture.xRatio), yRatio(mapTexture.yRatio), sumOfDistances(mapTexture.sumOfDistances), verticalRasterIndex(mapTexture.verticalRasterIndex), horizontalRasterIndex(mapTexture.horizontalRasterIndex), width(mapTexture.width), height(mapTexture.height), raster(mapTexture.raster)
+    MapTexture(const MapTexture &mapTexture) : mapTextureData(mapTexture.mapTextureData), mapEntry(mapTexture.mapEntry), sumOfDistances(mapTexture.sumOfDistances), verticalRasterIndex(mapTexture.verticalRasterIndex), horizontalRasterIndex(mapTexture.horizontalRasterIndex), width(mapTexture.width), height(mapTexture.height), raster(mapTexture.raster)
     {
         for (unsigned i = 0; i < LENGTH(vertexCoordinatesArray); i++)
             vertexCoordinatesArray[i] = mapTexture.vertexCoordinatesArray[i];
